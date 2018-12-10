@@ -8,25 +8,23 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 include $(INCLUDE_DIR)/package.mk
 
 define Package/template
-  SECTION:=base
-  CATEGORY:=Base system
-  TITLE:=Openwrt package template
-  URL:=http://bridge.sourceforge.net/
+	SECTION:=base
+	CATEGORY:=Base system
+	TITLE:=Openwrt package template
 endef
 
-define Package/bridge/description
- Ethernet bridging configuration utility
- Manage ethernet bridging; a way to connect networks together to
- form a larger network.
+define Package/template/description
+	Package template
 endef
 
-define Build/Configure
-  $(call Build/Configure/Default,--with-linux-headers=$(LINUX_DIR))
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	$(CP) ./src/* $(PKG_BUILD_DIR)/
 endef
 
-define Package/bridge/install
-        $(INSTALL_DIR) $(1)/usr/sbin
-        $(INSTALL_BIN) $(PKG_BUILD_DIR)/brctl/brctl $(1)/usr/sbin/
+define Package/template/install
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/template $(1)/usr/sbin/template
 endef
 
-$(eval $(call BuildPackage,bridge))
+$(eval $(call BuildPackage,template))
